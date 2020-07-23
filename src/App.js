@@ -41,6 +41,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <h1 className="App-header">Monsters Rolodex</h1>
       <SearchBox
         placeholder="Search monster"
         handleChange={handleSearchChange}
