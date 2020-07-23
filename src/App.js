@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import SearchBox from "./components/search-box/search-box.component";
 import CardList from "./components/card-list/card-list.component";
 import "./App.css";
 
@@ -20,12 +21,31 @@ const useFetchMonsters = () => {
   return monsters;
 };
 
+const useSearchField = () => {
+  const [searchField, setSearchField] = useState("");
+
+  const handleSearchChange = event => {
+    setSearchField(event.target.value);
+  };
+
+  return [searchField, handleSearchChange];
+};
+
 const App = () => {
   const monsters = useFetchMonsters();
+  const [searchField, handleSearchChange] = useSearchField();
+
+  const filteredMonsters = monsters.filter(monster =>
+    monster.name.toLowerCase().includes(searchField.toLowerCase())
+  );
 
   return (
     <div className="App">
-      <CardList monsters={monsters} />
+      <SearchBox
+        placeholder="Search monster"
+        handleChange={handleSearchChange}
+      />
+      <CardList monsters={filteredMonsters} />
     </div>
   );
 };
